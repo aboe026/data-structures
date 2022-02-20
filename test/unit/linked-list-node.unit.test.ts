@@ -1,84 +1,120 @@
 import LinkedListNode, { isLinkedListNode } from '../../src/linked-list-node'
+import { verifyListNode } from './helpers'
 
 describe('Linked List Node Unit Tests', () => {
+  describe('constructor', () => {
+    it('throws error for empty string', () => {
+      expect(() => new LinkedListNode('')).toThrow('Data for LinkedListNode cannot be empty string.')
+    })
+    it('can create from string', () => {
+      verifyListNode(new LinkedListNode('a'), 'a')
+    })
+    it('can create from number', () => {
+      verifyListNode(new LinkedListNode(1), 1)
+    })
+  })
   describe('data', () => {
-    it('can get data from node', () => {
+    it('can get string data from node', () => {
+      expect(new LinkedListNode('1').data).toEqual('1')
+    })
+    it('can get number data from node', () => {
       expect(new LinkedListNode(1).data).toEqual(1)
     })
   })
   describe('next', () => {
     it('can set next from undefined to node', () => {
-      const node = new LinkedListNode(2)
-      const nextNode = new LinkedListNode(3)
-      expect(node.data).toEqual(2)
-      expect(node.next).toEqual(undefined)
-      expect(nextNode.data).toEqual(3)
-      expect(nextNode.next).toEqual(undefined)
+      const node = new LinkedListNode(1)
+      const nextNode = new LinkedListNode(2)
+      verifyListNode(node, 1)
+      verifyListNode(nextNode, 2)
       node.next = nextNode
-      expect(node.data).toEqual(2)
-      expect(node.next).not.toEqual(undefined)
-      expect(node.next.data).toEqual(3)
-      expect(node.next.next).toEqual(undefined)
-      expect(nextNode.data).toEqual(3)
-      expect(nextNode.next).toEqual(undefined)
+      verifyListNode(node, 1, 2)
+      verifyListNode(nextNode, 2)
     })
     it('can set next from node to undefined', () => {
-      const node = new LinkedListNode(6)
-      const nextNode = new LinkedListNode(7)
+      const node = new LinkedListNode(1)
+      const nextNode = new LinkedListNode(2)
+      verifyListNode(node, 1)
+      verifyListNode(nextNode, 2)
       node.next = nextNode
-      expect(node.data).toEqual(6)
-      expect(node.next).not.toEqual(undefined)
-      expect(node.next.data).toEqual(7)
-      expect(node.next.next).toEqual(undefined)
-      expect(nextNode.data).toEqual(7)
-      expect(nextNode.next).toEqual(undefined)
+      verifyListNode(node, 1, 2)
+      verifyListNode(nextNode, 2)
       node.next = undefined
-      expect(node.data).toEqual(6)
-      expect(node.next).toEqual(undefined)
-      expect(nextNode.data).toEqual(7)
-      expect(nextNode.next).toEqual(undefined)
+      verifyListNode(node, 1)
+      verifyListNode(nextNode, 2)
     })
     it('can set next from node to node', () => {
-      const node = new LinkedListNode(8)
-      const nextNode = new LinkedListNode(9)
-      const newNextNode = new LinkedListNode(10)
+      const node = new LinkedListNode(1)
+      const nextNode = new LinkedListNode(2)
+      const newNextNode = new LinkedListNode(3)
+      verifyListNode(node, 1)
+      verifyListNode(nextNode, 2)
+      verifyListNode(newNextNode, 3)
       node.next = nextNode
-      expect(node.data).toEqual(8)
-      expect(node.next).not.toEqual(undefined)
-      expect(node.next.data).toEqual(9)
-      expect(node.next.next).toEqual(undefined)
-      expect(nextNode.data).toEqual(9)
-      expect(nextNode.next).toEqual(undefined)
-      expect(newNextNode.data).toEqual(10)
-      expect(newNextNode.next).toEqual(undefined)
+      verifyListNode(node, 1, 2)
+      verifyListNode(nextNode, 2)
+      verifyListNode(newNextNode, 3)
       node.next = newNextNode
-      expect(node.data).toEqual(8)
-      expect(node.next).not.toEqual(undefined)
-      expect(node.next.data).toEqual(10)
-      expect(node.next.next).toEqual(undefined)
-      expect(nextNode.data).toEqual(9)
-      expect(nextNode.next).toEqual(undefined)
-      expect(newNextNode.data).toEqual(10)
-      expect(newNextNode.next).toEqual(undefined)
+      verifyListNode(node, 1, 3)
+      verifyListNode(nextNode, 2)
+      verifyListNode(newNextNode, 3)
     })
   })
   describe('serialize', () => {
     it('returns data for node with just data', () => {
-      expect(new LinkedListNode(1).serialize()).toEqual('1')
+      expect(new LinkedListNode(1).serialize()).toEqual('|1|')
     })
-    it('returns data for node with data and undefined next', () => {
-      expect(new LinkedListNode(1, undefined).serialize()).toEqual('1')
+    it('returns data for node with data and explicitly undefined next', () => {
+      expect(new LinkedListNode(1, undefined).serialize()).toEqual('|1|')
     })
     it('returns datas separated by arrows for node with next', () => {
-      expect(new LinkedListNode(1, new LinkedListNode(2)).serialize()).toEqual('1 -> 2')
+      expect(new LinkedListNode(1, new LinkedListNode(2)).serialize()).toEqual('|1->2|')
     })
     it('returns datas separated by arrows for node with two nexts', () => {
-      expect(new LinkedListNode(1, new LinkedListNode(2, new LinkedListNode(3))).serialize()).toEqual('1 -> 2 -> 3')
+      expect(new LinkedListNode(1, new LinkedListNode(2, new LinkedListNode(3))).serialize()).toEqual('|1->2->3|')
+    })
+  })
+  describe('deserialize', () => {
+    it('throws error for empty string', () => {
+      expect(() => LinkedListNode.deserialize('')).toThrow(
+        'Invalid LinkedListNode serialization string "": Must begin with character "|".'
+      )
+    })
+    it('throws error if beginning character omitted', () => {
+      expect(() => LinkedListNode.deserialize('a|')).toThrow(
+        'Invalid LinkedListNode serialization string "a|": Must begin with character "|".'
+      )
+    })
+    it('throws error if end character omitted', () => {
+      expect(() => LinkedListNode.deserialize('|a')).toThrow(
+        'Invalid LinkedListNode serialization string "|a": Must end with character "|".'
+      )
+    })
+    it('throws error if data is empty string', () => {
+      expect(() => LinkedListNode.deserialize('||')).toThrow('Data for LinkedListNode cannot be empty string.')
+    })
+    it('converts single string to single node implicitly', () => {
+      verifyListNode(LinkedListNode.deserialize('|a|'), 'a')
+    })
+    it('converts single string to single node explicitly', () => {
+      verifyListNode(LinkedListNode.deserialize('|a|', String), 'a')
+    })
+    it('converts single number to single node', () => {
+      verifyListNode(LinkedListNode.deserialize('|1|', Number), 1)
+    })
+    it('converts multiple numbers to multiple node', () => {
+      verifyListNode(LinkedListNode.deserialize('|1->2->3|', Number), 1, 2, 3)
+    })
+    it('converts multiple strings to multiple node', () => {
+      verifyListNode(LinkedListNode.deserialize('|a->b->c|'), 'a', 'b', 'c')
     })
   })
   describe('isLinkedListNode', () => {
-    it('returns true for node', () => {
-      expect(isLinkedListNode(new LinkedListNode(11))).toEqual(true)
+    it('returns true for node without next', () => {
+      expect(isLinkedListNode(new LinkedListNode(1))).toEqual(true)
+    })
+    it('returns true for node with next', () => {
+      expect(isLinkedListNode(new LinkedListNode(1, new LinkedListNode(2)))).toEqual(true)
     })
     it('returns false for undefined', () => {
       expect(isLinkedListNode(undefined)).toEqual(false)
@@ -119,17 +155,17 @@ describe('Linked List Node Unit Tests', () => {
     it('returns false for multiple element array', () => {
       expect(isLinkedListNode(['a', 'b'])).toEqual(false)
     })
-    it('returns false for object with just _data', () => {
-      expect(
-        isLinkedListNode({
-          _data: 1,
-        })
-      ).toEqual(false)
-    })
     it('returns false for object with just next', () => {
       expect(
         isLinkedListNode({
           next: undefined,
+        })
+      ).toEqual(false)
+    })
+    it('returns false for object with just serialize', () => {
+      expect(
+        isLinkedListNode({
+          serialize: () => '',
         })
       ).toEqual(false)
     })

@@ -18,19 +18,57 @@ describe('Stack Unit Tests', () => {
   })
   describe('serialize', () => {
     it('returns empty string for empty', () => {
-      expect(new Stack().serialize()).toEqual('')
+      expect(new Stack().serialize()).toEqual('||')
     })
     it('returns data for single', () => {
-      expect(new Stack(1).serialize()).toEqual('1')
+      expect(new Stack(1).serialize()).toEqual('|1|')
     })
     it('returns datas separated by arrow for double', () => {
-      expect(new Stack(1, 2).serialize()).toEqual('2 -> 1')
+      expect(new Stack(1, 2).serialize()).toEqual('|2->1|')
     })
     it('returns datas separated by arrow for triple', () => {
-      expect(new Stack(1, 2, 3).serialize()).toEqual('3 -> 2 -> 1')
+      expect(new Stack(1, 2, 3).serialize()).toEqual('|3->2->1|')
+    })
+  })
+  describe('deserialize', () => {
+    it('throws error for empty string', () => {
+      expect(() => Stack.deserialize('')).toThrow(
+        'Invalid Stack serialization string "": Must begin with character "|".'
+      )
+    })
+    it('throws error if beginning character omitted', () => {
+      expect(() => Stack.deserialize('a|')).toThrow(
+        'Invalid Stack serialization string "a|": Must begin with character "|".'
+      )
+    })
+    it('throws error if end character omitted', () => {
+      expect(() => Stack.deserialize('|a')).toThrow(
+        'Invalid Stack serialization string "|a": Must end with character "|".'
+      )
+    })
+    it('converts to empty stack if data is empty', () => {
+      verifyStack(Stack.deserialize('||'), [])
+    })
+    it('converts single string to single node stack implicitly', () => {
+      verifyStack(Stack.deserialize('|a|'), ['a'])
+    })
+    it('converts single string to single node stack explicitly', () => {
+      verifyStack(Stack.deserialize('|a|', String), ['a'])
+    })
+    it('converts single number to single node stack', () => {
+      verifyStack(Stack.deserialize('|1|', Number), [1])
+    })
+    it('converts multiple numbers to multiple node stack', () => {
+      verifyStack(Stack.deserialize('|1->2->3|', Number), [3, 2, 1])
+    })
+    it('converts multiple strings to multiple node stack', () => {
+      verifyStack(Stack.deserialize('|a->b->c|'), ['c', 'b', 'a'])
     })
   })
   describe('push', () => {
+    it('throws error for empty string', () => {
+      expect(() => new Stack().push('')).toThrow('Data for Stack node cannot be empty string.')
+    })
     it('can add when empty', () => {
       const stack = new Stack()
       verifyStack(stack.push(1), [1])
@@ -49,10 +87,10 @@ describe('Stack Unit Tests', () => {
       verifyStack(stack, [3, 2, 1])
     })
     it('cannot add undefined', () => {
-      const stack = new Stack(1)
-      verifyStack(stack, [1])
-      verifyStack(stack.push(undefined), [1])
-      verifyStack(stack, [1])
+      const stack = new Stack()
+      verifyStack(stack, [])
+      verifyStack(stack.push(undefined), [])
+      verifyStack(stack, [])
     })
   })
   describe('pop', () => {

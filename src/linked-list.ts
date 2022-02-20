@@ -3,60 +3,75 @@ import LinkedListNode, { isLinkedListNode } from './linked-list-node'
 /**
  * A data structure for storing LinkedListNodes sequentially.
  */
-export default class LinkedList {
-  private _head: LinkedListNode | undefined = undefined
+export default class LinkedList<T> {
+  private _head: LinkedListNode<T> | undefined = undefined
 
   /**
    * Creates a new LinkedList instance.
    *
    * @param nodes Any number of nodes or items to initialize the list with.
    */
-  constructor(...nodes: LinkedListNode | any) {
+  constructor(...nodes: (LinkedListNode<T> | T)[]) {
     for (const node of nodes) {
       this.add(node)
     }
   }
 
   /**
-   * The first node in the list.
+   * The first node in the list, undefined if empty.
    */
-  get head(): LinkedListNode | undefined {
+  get head(): LinkedListNode<T> | undefined {
     return this._head
   }
 
   /**
    * Converts the list into it's string representation.
    *
-   * @returns A string representation of the list, with arrow (" -> ") separators between nodes.
+   * @returns A string representation of the list, with pipe ("|") denoting beginning and end, and arrows ("->") separating successive next nodes.
    */
   serialize(): string {
-    return this._head?.serialize() || ''
+    return this._head?.serialize() || `${LinkedListNode.SEPARATOR.Ends}${LinkedListNode.SEPARATOR.Ends}`
   }
 
   /**
-   * Insert a new node to the end of the list.
+   * Converts string representation of a list into a LinkedList object.
+   *
+   * @param serialization The string representing the list.
+   * @param castFromString The function to use when casting node data from its string representation to the desired T type.
+   * @returns The LinkedList object as defined in the serialization string.
+   */
+  static deserialize<T>(serialization: string, castFromString?: (nodeData: string) => T): LinkedList<T> {
+    if (serialization === `${LinkedListNode.SEPARATOR.Ends}${LinkedListNode.SEPARATOR.Ends}`) {
+      return new LinkedList<T>()
+    }
+    return new LinkedList<T>(LinkedListNode.deserialize<T>(serialization, castFromString))
+  }
+
+  /**
+   * Insert a new node to the end of the list. Does not alter nodes passed in.
    *
    * @param node The item to add to the end of the list.
    * @returns The list with the item added to the end of it.
    */
-  add(node: LinkedListNode | any): LinkedList {
+  add(node: LinkedListNode<T> | T): LinkedList<T> {
     if (node !== undefined) {
-      if (!this._head) {
-        if (isLinkedListNode(node)) {
-          this._head = node
-        } else {
-          this._head = new LinkedListNode(node)
-        }
-      } else {
-        let current: LinkedListNode = this._head
-        while (current && current.next !== undefined) {
+      if (isLinkedListNode(node)) {
+        let current: LinkedListNode<T> | undefined = node
+        while (current) {
+          this.add(current.data)
           current = current.next
         }
-        if (current) {
-          if (isLinkedListNode(node)) {
-            current.next = node
-          } else {
-            current.next = new LinkedListNode(node)
+      } else {
+        const newNode = new LinkedListNode(node)
+        if (!this._head) {
+          this._head = newNode
+        } else {
+          let current: LinkedListNode<T> = this._head
+          while (current && current.next !== undefined) {
+            current = current.next
+          }
+          if (current) {
+            current.next = newNode
           }
         }
       }
@@ -69,7 +84,7 @@ export default class LinkedList {
    *
    * @returns The list in reversed order.
    */
-  reverse(): LinkedList {
+  reverse(): LinkedList<T> {
     let previous = undefined
     let current = this._head
     let next = this._head?.next
