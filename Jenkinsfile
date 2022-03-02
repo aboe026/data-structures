@@ -1,4 +1,4 @@
-@Library('aboe026@shieldsio-badges') _ // groovylint-disable-line VariableName, UnusedVariable
+@Library('aboe026@shieldsio-badges')
 
 import org.aboe026.ShieldsIoBadges
 
