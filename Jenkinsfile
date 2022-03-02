@@ -8,7 +8,7 @@ node {
     def nodeImage = 'node:16'
     def version
     def exceptionThrown = false
-    // def badges = new ShieldsIoBadges(this)
+    def badges = new ShieldsIoBadges(this)
 
     try {
         ansiColor('xterm') {
@@ -68,12 +68,12 @@ node {
     } finally {
         // if (env.BRANCH_NAME == 'main') {
         if (true) { // groovylint-disable-line ConstantIfExpression
-            // badges.uploadBuildResult(
-            //     repo: 'data-structures',
-            //     status: currentBuild.currentResult,
-            //     // branch: env.BRANCH_NAME
-            //     branch: 'main'
-            // )
+            badges.uploadBuildResult(
+                repo: 'data-structures',
+                status: currentBuild.currentResult,
+                // branch: env.BRANCH_NAME
+                branch: 'main'
+            )
         }
         stage('Cleanup') {
             try {
