@@ -8,7 +8,7 @@ node {
     def nodeImage = 'node:16'
     def version
     def exceptionThrown = false
-    def badges = new ShieldsIoBadges(this)
+    def badges = new ShieldsIoBadges(steps: this)
 
     try {
         ansiColor('xterm') {
