@@ -58,9 +58,7 @@ node {
                             cobertura coberturaReportFile: 'coverage/unit/cobertura-coverage.xml'
                             // if (env.BRANCH_NAME == 'main') {
                             if (true) { // groovylint-disable-line ConstantIfExpression
-                                badges.uploadCoverageResult(
-                                    foo: 'bar'
-                                )
+                                badges.uploadCoverageResult()
                             }
                         }
                     }
