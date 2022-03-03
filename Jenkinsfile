@@ -56,6 +56,12 @@ node {
                         } finally {
                             junit testResults: 'test-results/unit.xml', allowEmptyResults: true
                             cobertura coberturaReportFile: 'coverage/unit/cobertura-coverage.xml'
+                            // if (env.BRANCH_NAME == 'main') {
+                            if (true) { // groovylint-disable-line ConstantIfExpression
+                                badges.uploadCoverageResult(
+                                    foo: 'bar'
+                                )
+                            }
                         }
                     }
                 }
