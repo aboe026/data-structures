@@ -8,7 +8,7 @@ node {
     def nodeImage = 'node:16'
     def version
     def exceptionThrown = false
-    Steps temp
+    Script temp
     def badges = new ShieldsIoBadges(temp)
 
     try {
