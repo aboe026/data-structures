@@ -58,11 +58,11 @@ node {
                             cobertura coberturaReportFile: 'coverage/unit/cobertura-coverage.xml'
                             // if (env.BRANCH_NAME == 'main') {
                             if (true) { // groovylint-disable-line ConstantIfExpression
-                                println 'TEST before badges.uploadCoverageResult'
                                 badges.uploadCoverageResult(
-                                    repo: 'data-structures'
+                                    repo: 'data-structures',
+                                    // branch: env.BRANCH_NAME
+                                    branch: 'main'
                                 )
-                                println 'TEST after badges.uploadCoverageResult'
                             }
                         }
                     }
@@ -75,7 +75,7 @@ node {
         println err
     } finally {
         // if (env.BRANCH_NAME == 'main') {
-        if (false) { // groovylint-disable-line ConstantIfExpression
+        if (true) { // groovylint-disable-line ConstantIfExpression
             badges.uploadBuildResult(
                 repo: 'data-structures',
                 status: currentBuild.currentResult,
