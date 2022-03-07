@@ -1,5 +1,8 @@
 # data-structures
 
+![build](https://img.shields.io/endpoint?url=https://aboe026.github.io/shields.io-badge-results/badge-results/data-structures/main/build.json)
+![coverage](https://img.shields.io/endpoint?url=https://aboe026.github.io/shields.io-badge-results/badge-results/data-structures/main/coverage.json)
+
 A repository containing basic data structure classes for learning and testing.
 
 ## Requirements
