@@ -56,12 +56,10 @@ node {
                         } finally {
                             junit testResults: 'test-results/unit.xml', allowEmptyResults: true
                             cobertura coberturaReportFile: 'coverage/unit/cobertura-coverage.xml'
-                            // if (env.BRANCH_NAME == 'main') {
-                            if (true) { // groovylint-disable-line ConstantIfExpression
+                            if (env.BRANCH_NAME == 'main') {
                                 badges.uploadCoverageResult(
                                     repo: 'data-structures',
-                                    // branch: env.BRANCH_NAME
-                                    branch: 'main'
+                                    branch: env.BRANCH_NAME
                                 )
                             }
                         }
@@ -74,13 +72,11 @@ node {
         println 'Exception was caught in try block of jenkins job.'
         println err
     } finally {
-        // if (env.BRANCH_NAME == 'main') {
-        if (true) { // groovylint-disable-line ConstantIfExpression
+        if (env.BRANCH_NAME == 'main') {
             badges.uploadBuildResult(
                 repo: 'data-structures',
                 status: currentBuild.currentResult,
-                // branch: env.BRANCH_NAME
-                branch: 'main'
+                branch: env.BRANCH_NAME
             )
         }
         stage('Cleanup') {
