@@ -9,6 +9,7 @@ node {
     def version
     def exceptionThrown = false
     def badges = new ShieldsIoBadges(this)
+    def uploadBadges = env.BRANCH_NAME == 'main'
 
     try {
         ansiColor('xterm') {
@@ -56,7 +57,7 @@ node {
                         } finally {
                             junit testResults: 'test-results/unit.xml', allowEmptyResults: true
                             cobertura coberturaReportFile: 'coverage/unit/cobertura-coverage.xml'
-                            if (true) { // groovylint-disable-line ConstantIfExpression
+                            if (uploadBadges) {
                                 badges.uploadCoberturaCoverageResult(
                                     repo: 'data-structures',
                                     branch: env.BRANCH_NAME
@@ -72,7 +73,7 @@ node {
         println 'Exception was caught in try block of jenkins job.'
         println err
     } finally {
-        if (true) { // groovylint-disable-line ConstantIfExpression
+        if (uploadBadges) {
             badges.uploadBuildResult(
                 repo: 'data-structures',
                 branch: env.BRANCH_NAME
