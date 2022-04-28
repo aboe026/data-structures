@@ -1,4 +1,4 @@
-@Library('aboe026') _ // groovylint-disable-line VariableName, UnusedVariable
+@Library('aboe026@unit-tests') _ // groovylint-disable-line VariableName, UnusedVariable
 
 import org.aboe026.ShieldsIoBadges
 
@@ -56,8 +56,8 @@ node {
                         } finally {
                             junit testResults: 'test-results/unit.xml', allowEmptyResults: true
                             cobertura coberturaReportFile: 'coverage/unit/cobertura-coverage.xml'
-                            if (env.BRANCH_NAME == 'main') {
-                                badges.uploadCoverageResult(
+                            if (true) { // groovylint-disable-line ConstantIfExpression
+                                badges.uploadCoberturaCoverageResult(
                                     repo: 'data-structures',
                                     branch: env.BRANCH_NAME
                                 )
@@ -72,10 +72,9 @@ node {
         println 'Exception was caught in try block of jenkins job.'
         println err
     } finally {
-        if (env.BRANCH_NAME == 'main') {
+        if (true) { // groovylint-disable-line ConstantIfExpression
             badges.uploadBuildResult(
                 repo: 'data-structures',
-                status: currentBuild.currentResult,
                 branch: env.BRANCH_NAME
             )
         }
