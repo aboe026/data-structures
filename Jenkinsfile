@@ -8,7 +8,7 @@ node {
     def nodeImage = 'node:16'
     def version
     def exceptionThrown = false
-    def badges = new ShieldsIoBadges(this)
+    def badges = new ShieldsIoBadges(this, 'data-structures')
     def uploadBadges = env.BRANCH_NAME == 'main'
 
     try {
@@ -59,7 +59,6 @@ node {
                             cobertura coberturaReportFile: 'coverage/unit/cobertura-coverage.xml'
                             if (uploadBadges) {
                                 badges.uploadCoberturaCoverageResult(
-                                    repo: 'data-structures',
                                     branch: env.BRANCH_NAME
                                 )
                             }
@@ -75,7 +74,6 @@ node {
     } finally {
         if (uploadBadges) {
             badges.uploadBuildResult(
-                repo: 'data-structures',
                 branch: env.BRANCH_NAME
             )
         }
