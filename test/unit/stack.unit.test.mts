@@ -1,5 +1,5 @@
-import Stack from '../../src/stack'
-import { verifyStack } from './helpers'
+import Stack from '../../src/stack.mjs'
+import { verifyStack } from './helpers.mjs'
 
 describe('Stack Unit Tests', () => {
   describe('constructor', () => {

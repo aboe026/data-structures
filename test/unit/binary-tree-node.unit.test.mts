@@ -1,5 +1,5 @@
-import BinaryTreeNode, { isBinaryTreeNode } from '../../src/binary-tree-node'
-import { verifyTreeNode } from './helpers'
+import BinaryTreeNode, { isBinaryTreeNode } from '../../src/binary-tree-node.mjs'
+import { verifyTreeNode } from './helpers.mjs'
 
 describe('Binary Tree Node Unit Tests', () => {
   describe('constructor', () => {

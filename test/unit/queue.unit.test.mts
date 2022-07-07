@@ -1,5 +1,5 @@
-import Queue from '../../src/queue'
-import { verifyQueue } from './helpers'
+import Queue from '../../src/queue.mjs'
+import { verifyQueue } from './helpers.mjs'
 
 describe('Queue Unit Tests', () => {
   describe('constructor', () => {

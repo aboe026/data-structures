@@ -1,6 +1,6 @@
-import BinaryTreeNode, { isBinaryTreeNode } from './binary-tree-node'
-import Queue from './queue'
-import { replaceInErrorMessage } from './error-util'
+import BinaryTreeNode, { isBinaryTreeNode } from './binary-tree-node.mjs'
+import Queue from './queue.mjs'
+import { replaceInErrorMessage } from './error-util.mjs'
 
 /**
  * A data structure for storing BinaryTreeNodes sequentially.

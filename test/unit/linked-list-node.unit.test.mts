@@ -1,5 +1,5 @@
-import LinkedListNode, { isLinkedListNode } from '../../src/linked-list-node'
-import { verifyListNode } from './helpers'
+import LinkedListNode, { isLinkedListNode } from '../../src/linked-list-node.mjs'
+import { verifyListNode } from './helpers.mjs'
 
 describe('Linked List Node Unit Tests', () => {
   describe('constructor', () => {

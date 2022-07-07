@@ -1,7 +1,7 @@
-import LinkedList from '../../src/linked-list'
-import LinkedListNode from '../../src/linked-list-node'
+import LinkedList from '../../src/linked-list.mjs'
+import LinkedListNode from '../../src/linked-list-node.mjs'
 
-import { verifyList, verifyListNode } from './helpers'
+import { verifyList, verifyListNode } from './helpers.mjs'
 
 describe('Linked List Unit Tests', () => {
   describe('constructor', () => {
