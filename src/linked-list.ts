@@ -89,9 +89,7 @@ export default class LinkedList<T> {
     let current = this._head
     let next = this._head?.next
     while (current !== undefined) {
-      if (current) {
-        current.next = previous
-      }
+      current.next = previous
       previous = current
       current = next
       next = next?.next
