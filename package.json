@@ -1,15 +1,15 @@
 {
-  "name": "typescript-template",
+  "name": "data-structures",
   "version": "0.2.5",
   "author": "Adam Boe",
   "description": "A launching point for a TypeScript repository",
   "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/aboe026/typescript-template.git"
+    "url": "https://github.com/aboe026/data-structures.git"
   },
   "bugs": {
-    "url": "https://github.com/aboe026/typescript-template/issues"
+    "url": "https://github.com/aboe026/data-structures/issues"
   },
   "engines": {
     "node": ">=18",
