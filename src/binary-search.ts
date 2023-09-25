@@ -1,35 +1,36 @@
-export function binarySearchIterative(items: number[], target: number) {
+export function binarySearchIterative(sortedItems: number[], target: number): number | undefined {
   let left = 0
-  let right = items.length - 1
+  let right = sortedItems.length - 1
   while (left <= right) {
     const middle = left + Math.floor((right - left) / 2)
-    if (items[middle] === target) {
+    const current = sortedItems[middle]
+    if (current === target) {
       return middle
-    } else if (items[middle] > target) {
-      right = middle - 1
-    } else {
+    } else if (current < target) {
       left = middle + 1
+    } else {
+      right = middle - 1
     }
   }
 }
 
 export function binarySearchRecursive(
-  items: number[],
+  sortedItems: number[],
   target: number,
   left?: number,
   right?: number
 ): number | undefined {
   left = left === undefined ? 0 : left
-  right = right === undefined ? items.length - 1 : right
-  if (left > right) {
-    return undefined
-  }
-  const middle = left + Math.floor((right - left) / 2)
-  if (items[middle] === target) {
-    return middle
-  } else if (items[middle] > target) {
-    return binarySearchRecursive(items, target, left, middle - 1)
-  } else {
-    return binarySearchRecursive(items, target, middle + 1, right)
+  right = right === undefined ? sortedItems.length - 1 : right
+  if (left <= right) {
+    const middle = left + Math.floor((right - left) / 2)
+    const current = sortedItems[middle]
+    if (current === target) {
+      return middle
+    } else if (current < target) {
+      return binarySearchRecursive(sortedItems, target, middle + 1, right)
+    } else {
+      return binarySearchRecursive(sortedItems, target, left, middle - 1)
+    }
   }
 }
