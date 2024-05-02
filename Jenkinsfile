@@ -5,7 +5,7 @@ import org.aboe026.ShieldsIoBadges
 node {
     def packageJson
     def workDir = "${WORKSPACE}/${env.BRANCH_NAME}-${env.BUILD_ID}"
-    def nodeImage = 'node:18'
+    def nodeImage = 'node:22'
     def version
     def exceptionThrown = false
     def badges = new ShieldsIoBadges(this, 'data-structures')

@@ -1,7 +1,7 @@
-import BinaryTree from '../../src/binary-tree'
-import BinaryTreeNode from '../../src/binary-tree-node'
+import BinaryTree from '../../src/binary-tree.mjs'
+import BinaryTreeNode from '../../src/binary-tree-node.mjs'
 
-import { verifyTree, verifyTreeNode } from './helpers'
+import { verifyTree, verifyTreeNode } from './helpers.mjs'
 
 describe('Binary Tree Unit Tests', () => {
   describe('constructor', () => {

@@ -1,16 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { exec } from 'child_process'
+import { fileURLToPath } from 'url'
 import fs from 'fs/promises'
 import path from 'path'
 import { promisify } from 'util'
 
-import packageJson from '../package.json'
+import packageJson from '../package.json' assert { type: 'json' }
 
 const execa = promisify(exec)
-const DENY_LIST: string[] = [
-  'open', // only supports ESM
-  'prettier',
-]
+const DENY_LIST: string[] = ['eslint'] // @typescript-eslint/eslint-plugin and @typescript-eslint/parser have peer dep req for eslint 8.x, not ready for 9.x
 
 //
 ;(async () => {
@@ -32,7 +30,7 @@ const DENY_LIST: string[] = [
       }
     }
   }
-  await fs.writeFile(path.join(__dirname, '../package.json'), `${JSON.stringify(packageJson, null, 2)}\n`)
+  await fs.writeFile(path.join(getFileDirectory(), '../package.json'), `${JSON.stringify(packageJson, null, 2)}\n`)
 })()
   .catch((err) => {
     console.error(err)
@@ -64,6 +62,10 @@ async function getOutdatedDependencies(): Promise<OutdatedDependenciesList> {
     throw new Error(`Error parsing outdated as JSON: ${err.message || err}`)
   }
   return outdatedJson
+}
+
+function getFileDirectory(): string {
+  return path.dirname(fileURLToPath(import.meta.url))
 }
 
 interface OutdatedDependenciesList {

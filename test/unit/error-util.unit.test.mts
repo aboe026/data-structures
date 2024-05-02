@@ -1,4 +1,4 @@
-import { replaceInErrorMessage } from '../../src/error-util'
+import { replaceInErrorMessage } from '../../src/error-util.mjs'
 
 describe('Error Util Unit Tests', () => {
   describe('replaceInErrorMessage', () => {

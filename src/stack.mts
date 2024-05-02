@@ -1,6 +1,6 @@
-import LinkedList from '../src/linked-list'
-import LinkedListNode from './linked-list-node'
-import { replaceInErrorMessage } from './error-util'
+import LinkedList from '../src/linked-list.mjs'
+import LinkedListNode from './linked-list-node.mjs'
+import { replaceInErrorMessage } from './error-util.mjs'
 
 /**
  * A data structure containing items with Last In First Out (LIFO) access.

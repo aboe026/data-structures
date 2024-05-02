@@ -1,9 +1,9 @@
-import BinaryTree from '../../src/binary-tree'
-import BinaryTreeNode from '../../src/binary-tree-node'
-import LinkedList from '../../src/linked-list'
-import LinkedListNode from '../../src/linked-list-node'
-import Queue from '../../src/queue'
-import Stack from '../../src/stack'
+import BinaryTree from '../../src/binary-tree.mjs'
+import BinaryTreeNode from '../../src/binary-tree-node.mjs'
+import LinkedList from '../../src/linked-list.mjs'
+import LinkedListNode from '../../src/linked-list-node.mjs'
+import Queue from '../../src/queue.mjs'
+import Stack from '../../src/stack.mjs'
 
 export function verifyListNode<T>(actual: LinkedListNode<T>, ...expected: any[]) {
   expect(actual.serialize()).toEqual(serializeExpectedListNodes(expected))

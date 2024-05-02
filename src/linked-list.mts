@@ -1,4 +1,4 @@
-import LinkedListNode, { isLinkedListNode } from './linked-list-node'
+import LinkedListNode, { isLinkedListNode } from './linked-list-node.mjs'
 
 /**
  * A data structure for storing LinkedListNodes sequentially.

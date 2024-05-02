@@ -11,8 +11,9 @@
   "bugs": {
     "url": "https://github.com/aboe026/data-structures/issues"
   },
+  "type": "module",
   "engines": {
-    "node": ">=18",
+    "node": ">=22",
     "npm": ">=9"
   },
   "main": "src/index.ts",
@@ -21,14 +22,15 @@
     "clean": "npm-run-all clean:build clean:coverage",
     "clean:build": "rimraf build",
     "clean:coverage": "rimraf coverage",
-    "coverage:view": "ts-node scripts/view-coverage.ts coverage/unit/lcov-report/index.html",
+    "coverage:view": "npm run ts-node-esm scripts/view-coverage.mts coverage/unit/lcov-report/index.html",
+    "jest": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint . && prettier --check . && npm-groovy-lint --ignorepattern **/node_modules/** --failon info",
     "lint:fix": "eslint --fix . && prettier --write . && npm-groovy-lint --ignorepattern **/node_modules/** --failon info --fix",
-    "start": "ts-node src/index.ts",
     "test": "npm-run-all --serial lint test:unit",
     "test:unit": "jest test/unit --collectCoverage --coverageDirectory=coverage/unit",
     "test:unit:xml": "cross-env JEST_JUNIT_CLASSNAME='unit.{classname}' JEST_JUNIT_OUTPUT_NAME=unit.xml npm run test:unit -- --reporters=default --reporters=jest-junit",
-    "update-dependencies": "ts-node scripts/update-dependencies.ts"
+    "ts-node-esm": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ",
+    "update-dependencies": "npm run ts-node-esm  scripts/update-dependencies.mts"
   },
   "dependencies": {},
   "devDependencies": {
@@ -43,7 +45,7 @@
     "jest-junit": "16.0.0",
     "npm-groovy-lint": "14.5.0",
     "npm-run-all": "4.1.5",
-    "open": "8.4.2",
+    "open": "10.1.0",
     "prettier": "3.2.5",
     "rimraf": "5.0.5",
     "ts-jest": "29.1.2",

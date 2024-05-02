@@ -1,6 +1,6 @@
-import LinkedList from './linked-list'
-import LinkedListNode from './linked-list-node'
-import { replaceInErrorMessage } from './error-util'
+import LinkedList from './linked-list.mjs'
+import LinkedListNode from './linked-list-node.mjs'
+import { replaceInErrorMessage } from './error-util.mjs'
 
 /**
  * A data structure containing items with First In First Out (FIFO) access
